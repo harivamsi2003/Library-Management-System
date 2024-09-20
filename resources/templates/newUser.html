@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Library Management System</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script>
+        function toggleBookIdsField() {
+            var checkbox = document.getElementById("borrowing");
+            var bookIdsField = document.getElementById("bookIdsField");
+            if (checkbox.checked) {
+                bookIdsField.style.display = "block";
+            } else {
+                bookIdsField.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+	<div class="container">
+		<hr>
+		<h3>Add New User</h3>
+		<form th:action="@{/users/save}" th:object="${user}" method="POST">
+			<input type="text" th:field="*{user_id}" placeholder="User ID" 
+            	class="form-control mb-4 col-4">
+            <input type="text" th:field="*{name}" placeholder="User Name" 
+            	class="form-control mb-4 col-4">
+            <div class="form-check">
+		        <input type="checkbox" id="borrowing" th:field="*{borrowing}" class="form-check-input" onclick="toggleBookIdsField()">
+		        <label class="form-check-label" for="borrowing">Is Borrowing Books</label>
+		    </div>
+
+            <!-- Book IDs Field (Hidden initially) -->
+            <div id="bookIdsField" style="display: none;" class="mt-3">
+		        <label for="bookIds">Enter Book IDs (comma-separated):</label>
+		        <input type="text" th:field="*{bookIds}" id="bookIds" class="form-control mb-4 col-4" placeholder="e.g., 1,2,3">
+		    </div>
+            <button type="submit" class="btn btn-info col-2">Save User</button>
+		</form>
+		<hr>
+		<a th:href="@{/users/}">Back to Users List</a>
+	</div>
+</body>
+</html>
